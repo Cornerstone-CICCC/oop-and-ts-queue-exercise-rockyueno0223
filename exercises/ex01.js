@@ -8,13 +8,25 @@ const Queue = require('../lib/Queue')
 
 function processApplicants(queue) {
   // your code here
+  const tempQueue = new Queue()
+
+  while (!queue.isEmpty()) {
+    const item = queue.dequeue()
+    if (item.yearsExperience >= 2 && item.techStack.includes('React')) {
+      tempQueue.enqueue(item)
+    }
+  }
+
+  while (!tempQueue.isEmpty()) {
+    queue.enqueue(tempQueue.dequeue())
+  }
 }
 
 const applicants = new Queue()
-applicants.push({ name: "John Smith", yearsExperience: 3, techStack: ['Angular', 'Node'] })
-applicants.push({ name: "Jane Smith", yearsExperience: 5, techStack: ['Node', 'React', 'Vue'] })
-applicants.push({ name: "Joe Smith", yearsExperience: 1, techStack: ['React', 'Node'] })
-applicants.push({ name: "Jack Smith", yearsExperience: 2, techStack: ['Node', 'MongoDB', 'React'] })
+applicants.enqueue({ name: "John Smith", yearsExperience: 3, techStack: ['Angular', 'Node'] })
+applicants.enqueue({ name: "Jane Smith", yearsExperience: 5, techStack: ['Node', 'React', 'Vue'] })
+applicants.enqueue({ name: "Joe Smith", yearsExperience: 1, techStack: ['React', 'Node'] })
+applicants.enqueue({ name: "Jack Smith", yearsExperience: 2, techStack: ['Node', 'MongoDB', 'React'] })
 
 processApplicants(applicants)
 console.log(applicants.printQueue())
